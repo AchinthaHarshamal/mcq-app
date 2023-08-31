@@ -1,19 +1,21 @@
 import React from 'react'
 import Link from 'next/link'
 
-const Home = () => {
+const Createbank = () => {
   return (
     <div>
-        <h1>MCQ bank</h1>
-        <Link href='/createbank'>
-            Create
+        <Link href="/">
+            <h1>MCQ Bank</h1>
         </Link>
-        <div></div>
+        
+        <h1>Create Bank</h1>
         <Link href='/quiz'>
             Colloection
         </Link>
     </div>
+
+    
   )
 }
 
-export default Home
+export default Createbank
