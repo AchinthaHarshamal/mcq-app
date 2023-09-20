@@ -63,13 +63,20 @@ export async function getStaticPaths() {
         //     }
         // ],
         paths,
-        fallback: false
+        fallback: true
     }
 }
 
 export async function getStaticProps(context) {
     const { params } = context;
     const response = await fetch(`http://localhost:5001/api/collections/${params.quizId}`);
+    
+    // return notFound object as prop to haddle errors
+    if(response.status != 200){
+        return {
+            notFound: true
+        }
+    }
     const data = await response.json();
 
     return {
