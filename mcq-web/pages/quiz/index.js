@@ -1,32 +1,40 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Collection from '@/components/collection'
 
 
-const quizeCollection = ({ quizId = 20 }) => {
+const QuizeCollection = ({ collections }) => {
     const router = useRouter()
-    const handleClick = () =>{
-        console.log('click the div');
-        router.push('/quiz/5')
-
+    const handleClick = (id) => {
+        router.push(`/quiz/${id}`)
     }
 
     return (
         <div>
             <h1>Collection</h1>
-
-            <Link href={`/quiz/${quizId}`}>
-                Collection {quizId}
-            </Link>
-
-            <div onClick={handleClick}>
-                <h1>Title COxxx</h1>
-                <p>this is some description</p>
-                <span>Questions: 24</span>
-                <span>Author: Achintha</span>
-            </div>
+            {
+                collections.map(collection => {
+                    return (
+                        <div key={collection._id} onClick={() => handleClick(collection._id)}>
+                            <Collection collection={collection} />
+                        </div>)
+                })
+            }
         </div>
     )
-}
+} 
 
-export default quizeCollection
+export default QuizeCollection
+
+
+export async function getStaticProps() {
+    const response = await fetch("http://localhost:5001/api/collections");
+    const data = await response.json();
+
+    return {
+        props: {
+            collections: data
+        }
+    }
+}
